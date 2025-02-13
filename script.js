@@ -7,18 +7,24 @@ canvas.height = 700;
 let lineArray = [];
 let lineNumber = 20;
 
-//background gradient
+//background gradient --> assign `gradient` to this.color to show effect
 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 gradient.addColorStop("0.0", "green");
 gradient.addColorStop("1.0", "orange");
+
+//background image --> assign `pattern` to this.color to show effect
+const backgroundImage = document.getElementById("backgroundImage");
+const pattern = ctx.createPattern(backgroundImage, "no-repeat");
+
+//random color generated --> move to constructor for different color for everyline
+let randomColor = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
 
 class Line {
 	constructor(canvas) {
 		this.x = Math.floor(Math.random() * canvas.width + canvas.width / 2);
 		this.y = Math.floor(Math.random() * canvas.height);
 		this.history = [{ x: this.x, y: this.y }];
-		this.color = gradient;
-		//this.color = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
+		this.color = pattern;
 		this.lineWidth = Math.floor(Math.random() * 15 + 5);
 		this.lineLength = Math.random() * 200 - 5;
 		this.timer = 0;
