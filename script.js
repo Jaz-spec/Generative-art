@@ -5,14 +5,20 @@ canvas.width = 700;
 canvas.height = 700;
 
 let lineArray = [];
-let lineNumber = 5;
+let lineNumber = 20;
+
+//background gradient
+const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+gradient.addColorStop("0.0", "green");
+gradient.addColorStop("1.0", "orange");
 
 class Line {
 	constructor(canvas) {
 		this.x = Math.floor(Math.random() * canvas.width + canvas.width / 2);
 		this.y = Math.floor(Math.random() * canvas.height);
 		this.history = [{ x: this.x, y: this.y }];
-		this.color = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
+		this.color = gradient;
+		//this.color = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
 		this.lineWidth = Math.floor(Math.random() * 15 + 5);
 		this.lineLength = Math.random() * 200 - 5;
 		this.timer = 0;
@@ -37,8 +43,8 @@ class Line {
 
 	update() {
 		this.timer++;
-		this.x -= this.speedX + Math.random() * 50 - 5;
-		this.y += this.speedY + Math.random() * 30 - 5;
+		this.x -= this.speedX + Math.random() * 30 - 13;
+		this.y += this.speedY + Math.random() * 30 - 13;
 		if (this.timer < this.lineLength) {
 			this.history.push({ x: this.x, y: this.y });
 		} else if (
@@ -64,6 +70,11 @@ for (i = 0; i < lineNumber; i++) {
 
 function animate() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	//backoud color
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 	lineArray.forEach((line) => {
 		line.draw(ctx);
 		line.update();
